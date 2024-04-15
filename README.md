@@ -51,3 +51,12 @@ This program uses the following external libraries:
 - [**FastNoiseLite.h**](https://github.com/Auburn/FastNoiseLite/blob/master/Cpp/FastNoiseLite.h):   Noise generation library for procedural terrain.
 - [**glm**](https://github.com/g-truc/glm): OpenGL mathematics library for simple vector and matrix operations.
 
+## Demo
+- Some images of the program:
+![minecraft-clone](images/minecraft-clone.png)
+- Chunks behind the player do not get drawn:
+![chunk culling](images/chunk-culling.png)
+- Block faces that are between two opaque blocks and block faces that are facing away from the camera do not get rendered:
+![face culling](images/face-culling.png)
+- Dynamic chunk loading:
+![dynamic chunk loading](images/dynamic-loading.gif)
