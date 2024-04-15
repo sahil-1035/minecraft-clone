@@ -53,10 +53,10 @@ This program uses the following external libraries:
 
 ## Demo
 - Some images of the program:
-![minecraft-clone](images/minecraft-clone.png)
+![minecraft-clone](images/minecraft-clone.webp)
 - Chunks behind the player do not get drawn:
-![chunk culling](images/chunk-culling.png)
+![chunk culling](images/chunk-culling.webp)
 - Block faces that are between two opaque blocks and block faces that are facing away from the camera do not get rendered:
-![face culling](images/face-culling.png)
+![face culling](images/face-culling.webp)
 - Dynamic chunk loading:
 ![dynamic chunk loading](images/dynamic-loading.gif)
