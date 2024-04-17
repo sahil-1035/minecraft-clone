@@ -1,7 +1,7 @@
 # Minecraft Clone
-Hi! I am Sahil. This is a small Minecraft clone I made to learn about managing large projects, some data structures and rendering using OpenGL.
+Hi! I am Sahil. This is a small Minecraft clone I made using C++ to learn about managing large projects, some data structures and rendering using OpenGL.
 
-This program was written under Linux, But the code is portable and you should be able to built it under windows. 
+This program was written under Linux, But the code is portable and you should be able to build it under windows.
 
 All the dependencies are contained in the repo and is included using CMake. So no other programs have to be installed.
 ## Features
@@ -27,7 +27,7 @@ cmake -B build -G Ninja
 ninja -C build
 ./build/Minecraft
 ```
-For make, replace the above ```cmake``` and ```ninja``` commands with the following:
+For using ```make```, replace the above ```cmake``` and ```ninja``` commands with the following:
 ```
 cmake -B build
 make -C build
