@@ -4,6 +4,7 @@
 #include <random>
 #include <iostream>
 #include <filesystem>
+#include <sstream>
 
 #include "utils/Timer.h"
 #include "utils/File.h"
@@ -29,6 +30,9 @@ void Chunk::Init(glm::vec2 pos)
 {
 	_pos = pos;
 	_loaded = false;
+	std::stringstream tmpss;
+	tmpss << "CHUNK ( " << pos.x << ", " << pos.y << " )";
+	_log.Init(tmpss.str());
 	for(unsigned int i = 0; i < 6; i++)
 		surroundingChunks[i] = NULL;
 }
@@ -81,7 +85,7 @@ void Chunk::GenChunk()
 		return;
 	}
 
-	std::cout<<"Generating Chunk  "<<_pos.x<<", "<<_pos.y<<std::endl;
+	_log[INFO]<<"Generating Chunk\n";
 	float freq = 50;
 	long unsigned int seed = 422;
 

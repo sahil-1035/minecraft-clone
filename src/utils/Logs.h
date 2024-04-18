@@ -1,18 +1,40 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <unordered_map>
 
-#define DEBUG
-#define LOG_MAX 0
+enum LogType { INFO, WARN, ERROR };
 
-static void logFunc(std::string message, int loglevel)
+class Logger
 {
-	if(loglevel<LOG_MAX)
-		std::cout<<message<<std::endl;
-}
-
-#ifdef DEBUG
-	#define Log(x,y) logFunc(x,y)
-#else
-	#define Log(x,y)
-#endif // DEBUG
+public:
+	Logger()
+	{}
+	Logger(std::string catagory)
+	{
+		Init(catagory);
+	}
+	void Init(std::string catagory)
+	{
+		_catagory = catagory;
+	}
+	Logger& operator[](LogType logtype)
+	{
+		std::cout << "[" << logString.at(logtype) << "] "
+			<< "[" << _catagory << "] ";
+		return *this;
+	}
+	template<typename T>
+	Logger& operator<<(T message)
+	{
+		std::cout << message;
+		return *this;
+	}
+private:
+	std::string _catagory;
+	const std::unordered_map<LogType, std::string> logString = {
+		{ INFO, "INFO" },
+		{ WARN, "WARN" },
+		{ ERROR, "ERROR" }
+	};
+};

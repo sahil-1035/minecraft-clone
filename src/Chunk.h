@@ -1,5 +1,6 @@
 #pragma once
 
+#include "utils/Logs.h"
 #define CALLBACK
 #include "include/glm/glm.hpp"
 #include "include/GL/glew.h"
@@ -62,6 +63,7 @@ private:
 	std::vector<GLfloat> t_verticies;
 	std::vector<GLuint> t_indecies;
 
+	Logger _log;
 	//	std::thread _fileLoad;
 	bool _loaded;
 };
