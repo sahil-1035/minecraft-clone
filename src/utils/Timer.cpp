@@ -1,24 +1,17 @@
 #include "Timer.h"
 
 #include <chrono>
-#include <iostream>
 #include <string>
+#include <sstream>
 
 #include "Logs.h"
 
 
-#ifdef TIMER_LOG
-#define COUT std::cout
-#else
-#define COUT if(false) std::cout
-#endif
-
-
 Timer::Timer()
 {}
-Timer::Timer(std::string name)
+Timer::Timer(Logger* logger, std::string name)
 {
-	init(name);
+	init(logger, name);
 }
 Timer::~Timer()
 {
@@ -27,17 +20,20 @@ Timer::~Timer()
 }
 
 
-void Timer::init(std::string name)
+void Timer::init(Logger* logger, std::string name)
 {
 	_name = name;
 	_deltaT = 0;
 	_ended = false;
 	_start = std::chrono::high_resolution_clock::now();
+	_log = logger;
 }
 
 void Timer::end()
 {
-	COUT<<"[TIMER] "<<_name<<" : "<<GetTimeTaken()<<" microseconds"<<std::endl;
+#ifdef ENABLE_TIMER
+	(*_log)[TIMER] << "[ " << _name << " ] " << GetTimeTaken() << " microseconds\n";
+#endif
 	_ended = true;
 }
 

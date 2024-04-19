@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <random>
-#include <iostream>
 #include <filesystem>
 #include <sstream>
 
@@ -72,20 +71,20 @@ void Chunk::GenTree(glm::ivec3 p)
 void Chunk::GenChunk()
 {
 	// Checks if the Chunk has already been generated
-	char rootFilePath[15];
-	sprintf(rootFilePath, "data/%dx%d", _pos.x, _pos.y);
-	if(std::filesystem::exists(rootFilePath))
+	std::stringstream rootFilePath;
+	rootFilePath << "data/" << _pos.x << "x" << _pos.y;
+	if(std::filesystem::exists(rootFilePath.str()))
 	{
 		//_fileLoad = std::thread(&Chunk::LoadChunk, this);
 		//_fileLoad.join();
-		std::cout<<"Loading Chunk  "<<_pos.x<<", "<<_pos.y<<std::endl;
+		_log[INFO] << "Loading Chunk\n";
 		LoadChunk();
 		SetUpGPU();
 		//_loaded = true;
 		return;
 	}
 
-	_log[INFO]<<"Generating Chunk\n";
+	_log[INFO] << "Generating Chunk\n";
 	float freq = 50;
 	long unsigned int seed = 422;
 
@@ -134,7 +133,7 @@ void Chunk::ConstructVerticies()
 {
 	if(_loaded)
 		return;
-	//Timer constvert("Construct Verticies");
+	Timer constvert(&_log, "Construct Verticies");
 	for(const auto&pair:_blocks)
 	{
 		int mapKey = pair.first;
@@ -329,7 +328,7 @@ bool Chunk::IsLoaded()
 		return true;
 	//else if(!_fileLoad.joinable())
 	{
-		std::cout<<"GPU Reset initiated.\n";
+		_log[INFO] << "GPU Reset initiated.\n";
 		SetUpGPU();
 		_loaded = true;
 		return true;

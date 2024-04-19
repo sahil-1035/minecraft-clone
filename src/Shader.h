@@ -1,6 +1,7 @@
 #pragma once
 
 #include "include/GL/glew.h"
+#include "utils/Logs.h"
 
 class Shader
 {
@@ -19,4 +20,6 @@ private:
 	unsigned int _noOfShaders;
 	GLuint* _shaders;
 	GLuint _program;
+
+	Logger _log;
 };

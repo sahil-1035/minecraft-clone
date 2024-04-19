@@ -20,6 +20,7 @@ Texture::~Texture()
 void Texture::Init(unsigned int count)
 {
 	_count = count;
+	_log.Init("TEXTURE");
 	glGenTextures(count, &_textures);
 	/* stbi_set_flip_vertically_on_load(true); */
 
@@ -40,7 +41,7 @@ void Texture::Load(const char* texturePath)
 	unsigned char* data = stbi_load(texturePath, &x, &y, &channels, 0);
 	Bind();
 	if (!data)
-		std::cout<<"[ERROR]  "<<texturePath<<"  could not be loaded"<<std::endl;
+		_log[ERROR] << texturePath << "  could not be loaded" << "\n";
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, x, y, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	stbi_image_free(data);

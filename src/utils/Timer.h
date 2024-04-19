@@ -3,15 +3,17 @@
 #include <chrono>
 #include <string>
 
+#include "Logs.h"
+
 
 class Timer
 {
 public:
 	Timer();
-	Timer(std::string name);
+	Timer(Logger* logger, std::string name);
 	~Timer();
 
-	void init(std::string name);
+	void init(Logger* logger, std::string name);
 	void end();
 
 	void pause();
@@ -27,6 +29,7 @@ private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> _end;
 
 	unsigned long _deltaT;
+	Logger* _log;
 
 	bool _ended;
 };

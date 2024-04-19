@@ -23,6 +23,7 @@ void Shader::Init(const unsigned int noOfShaders)
 	_createdShaders = 0;
 	_noOfShaders = noOfShaders;
 	_shaders = new GLuint[noOfShaders];
+	_log.Init("SHADER");
 }
 
 void Shader::LoadShader(GLenum ShaderType, const char* path)
@@ -33,8 +34,7 @@ void Shader::LoadShader(GLenum ShaderType, const char* path)
 	File shaderFile(path);
 	std::string code = shaderFile.ReadFile();
 	const char* glslCode = code.c_str();
-	std::cout<<"Compiling shader : "<<path<<std::endl;
-	/* std::cout<<glslCode<<std::endl; */
+	_log[INFO] << "Compiling shader : " << path << "\n";
 	glShaderSource(_shaders[index], 1, &glslCode, NULL);
 	glCompileShader(_shaders[index]);
 
@@ -46,14 +46,14 @@ void Shader::LoadShader(GLenum ShaderType, const char* path)
 	{
 		std::vector<char> shaderErrorMessage(infoLogLength + 1);
 		glGetShaderInfoLog(_shaders[index], infoLogLength, NULL, &shaderErrorMessage[0]);
-		std::cout<<&shaderErrorMessage[0]<<std::endl;
+		_log[ERROR] << &shaderErrorMessage[0] << "\n";
 	}
 	_createdShaders += 1;
 }	
 
 void Shader::GenProgram()
 {
-	std::cout<<"Linking program"<<std::endl;
+	_log[INFO] << "Linking program" << "\n";
 	_program = glCreateProgram();
 	for(unsigned int i = 0; i < _noOfShaders; i++)
 		glAttachShader(_program, _shaders[i]);
@@ -67,7 +67,7 @@ void Shader::GenProgram()
 	{
 		std::vector<char> programErrorMessage(infoLogLength + 1);
 		glGetProgramInfoLog(_program, infoLogLength, NULL, &programErrorMessage[0]);
-		std::cout<<&programErrorMessage[0]<<std::endl;
+		_log[ERROR] << &programErrorMessage[0] << "\n";
 	}
 
 	for(unsigned int i = 0; i < _noOfShaders; i++)

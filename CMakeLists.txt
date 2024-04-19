@@ -6,6 +6,7 @@ set(CMAKE_BUILD_TYPE Debug)
 set(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 17)
 
 add_definitions(-DENABLE_LOG)
+# add_definitions(-DENABLE_TIMER)
 
 add_subdirectory(deps/glfw)
 

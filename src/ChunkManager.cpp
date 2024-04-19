@@ -16,7 +16,6 @@
 #include "Chunk.h"
 #include "Directions.h"
 
-#define TIMER_LOG
 #include "utils/Timer.h"
 
 unsigned int Distance(glm::vec2* p1, glm::vec2* p2);
@@ -41,6 +40,7 @@ void ChunkManager::Init(unsigned int renderDistance)
 	for(unsigned int i = 0; i <_chunksLen; i++)
 		_chunks[i] = NULL;
 	_firstload = true;
+	_log.Init("Chunk Manager");
 }
 
 bool ChunkManager::AddChunk(glm::ivec2 chunkPos)

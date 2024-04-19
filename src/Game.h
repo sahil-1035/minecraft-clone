@@ -11,6 +11,7 @@
 #include "Shader.h"
 
 #include "Camera.h"
+#include "utils/Logs.h"
 enum class GameState{ RUN, QUIT };
 static int window_width, window_height;
 static bool windowFocused;
@@ -32,6 +33,7 @@ private:
 	GLFWwindow* _window;
 	GameState _gameState;
 	Camera _cam;
+	Logger _log;
 
 	ChunkManager _chunkManager;
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "include/GL/glew.h"
+#include "utils/Logs.h"
 
 
 class Texture
@@ -16,4 +17,6 @@ public:
 private:
 	GLuint _textures;
 	unsigned int _count;
+
+	Logger _log;
 };

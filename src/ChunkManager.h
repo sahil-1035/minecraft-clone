@@ -3,6 +3,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Chunk.h"
+#include "utils/Logs.h"
 
 #include <vector>
 #include <unordered_map>
@@ -38,6 +39,8 @@ private:
 	std::unordered_map<int, unsigned int> _chunkIndex;
 	//std::unordered_map<int, Chunk*> _chunk;
 	//std::vector<Chunk*> _chunks;
+
+	Logger _log;
 
 	bool _firstload;
 

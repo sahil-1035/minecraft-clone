@@ -33,6 +33,7 @@ void Game::Init(int width, int height, const char* window_title)
 	_gameState = GameState::RUN;
 	window_width = width;
 	window_height = height;
+	_log.Init("Engine");
 
 	_cam.pos = glm::vec3(19200,19200,50);
 	_cam.verticalAngle = 0.0f;
@@ -40,7 +41,7 @@ void Game::Init(int width, int height, const char* window_title)
 
 	glewExperimental = true;
 	if(!glfwInit())
-		std::cout<<"[ERROR]  GLFW could not initialize."<<std::endl;
+		_log[ERROR] << "GLFW could not initialize.\n";
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -50,12 +51,12 @@ void Game::Init(int width, int height, const char* window_title)
 
 	_window = glfwCreateWindow(window_width, window_height, window_title, glfwGetPrimaryMonitor(), NULL);
 	if(_window == NULL)
-		std::cout<<"[ERROR]  Window could not be created."<<std::endl;
+		_log[ERROR] << "Window could not be created.\n";
 
 	glfwMakeContextCurrent(_window);
 	glewExperimental = true;
 	if(glewInit() != GLEW_OK)
-		std::cout<<"[ERROR]  GLEW could not initialize."<<std::endl;
+		_log[ERROR] << "GLEW could not initialize.\n";
 
 	glfwSetInputMode(_window, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwSetWindowSizeCallback(_window, WindowSizeCallback);
@@ -88,8 +89,8 @@ void Game::Init(int width, int height, const char* window_title)
 
 void Game::Run()
 {
-	std::cout<<"width: "<<window_width<<std::endl;
-	std::cout<<"height: "<<window_height<<std::endl;
+	_log[INFO] << "width: " << window_width << "\n";
+	_log[INFO] << "height: " << window_height << "\n";
 	glClearColor(0.0f, 0.6f, 0.86f, 0.0f);
 
 	shader.Init(2);
@@ -101,19 +102,19 @@ void Game::Run()
 	txt.Load("assets/blocks.png");
 
 	{
-		Timer cg("Total Chunk Gen time");
+		Timer cg(&_log, "Total Chunk Gen time");
 		_chunkManager.Init(20);
 		_chunkManager.GenerateChunks(glm::floor(_cam.pos));
 	}
 	while(_gameState != GameState::QUIT)
 	{
-		Timer whilelp("Rest of Game Loop");
+		Timer whilelp(&_log, "Rest of Game Loop");
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		whilelp.pause();
-		Timer dt("Draw Time");
+		Timer dt(&_log, "Draw Time");
 		_chunkManager.DrawChunks(&_cam, &shader, (float)window_width/(float)window_height, _cam.pos, _cam.dir);
 		dt.end();
-		Timer ut("Update Time");
+		Timer ut(&_log, "Update Time");
 		_chunkManager.UpdateChunks(_cam.pos);
 		ut.end();
 		whilelp.resume();
